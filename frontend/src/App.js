@@ -42,7 +42,7 @@ function App() {
     abortControllerRef.current = controller;
 
     try {
-      // For local development, please use http://127.0.0.1:8000/process-message
+      // for local development, please use http://127.0.0.1:8000/process-message
       const response = await fetch('https://testai-pv4q.onrender.com/process-message', {
         method: 'POST',
         headers: {
