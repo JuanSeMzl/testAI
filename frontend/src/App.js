@@ -99,24 +99,27 @@ function App() {
         }
       }
     } catch (error) {
+      if (error.name !== 'AbortError') {
         alert('Error while connecting the server');
-    } finally {
-      abortControllerRef.current = null;
-      setIsLoading(false);
+      }
     }
+    setIsLoading(false);
   };
 
   const handleCancel = () => {
     if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
+      abortControllerRef.current.abort(); // <-- esto cancela la petición
 
-      // Limpia el estado visual
+      // Limpia los estados visuales
       setIsTyping({
         'professional': false,
         'casual': false,
         'polite': false,
         'social media': false
       });
+
+      setIsLoading(false);
+      abortControllerRef.current = null;
     }
   };
 
