@@ -1,16 +1,18 @@
 import React from 'react';
 import { styles } from '../styles/styles';
 
-function Buttons({ isLoading, onSubmit, onCancel }) {
+function Buttons({ isLoading, onSubmit, onCancel, inputText }) {
+  const isDisabled = isLoading || inputText.trim() === '';
+
   return (
     <div style={styles.buttonGroup}>
       <button
         onClick={onSubmit}
-        disabled={isLoading}
+        disabled={isDisabled}
         style={{
           ...styles.button,
           ...styles.sendButton,
-          opacity: isLoading ? 0.6 : 1
+          opacity: isDisabled ? 0.6 : 1
         }}
       >
         {isLoading ? 'Processing...' : 'Process'}
@@ -30,5 +32,4 @@ function Buttons({ isLoading, onSubmit, onCancel }) {
     </div>
   );
 }
-
 export default Buttons;

@@ -43,7 +43,8 @@ function App() {
 
     try {
       // for local development, please use http://127.0.0.1:8000/process-message
-      const response = await fetch('https://testai-pv4q.onrender.com/process-message', {
+      //const response = await fetch('https://testai-pv4q.onrender.com/process-message', {
+      const response = await fetch('http://127.0.0.1:8000/process-message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -124,7 +125,12 @@ function App() {
       <h1 style={styles.title}>Styling Text Converter</h1>
 
       <InputSection inputText={inputText} setInputText={setInputText} />
-      <Buttons isLoading={isLoading} onSubmit={handleSubmit} onCancel={handleCancel} />
+      <Buttons
+        isLoading={isLoading}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        inputText={inputText}
+      />
       <ResultSection result={result} isTyping={isTyping} />
     </div>
   );
