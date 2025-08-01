@@ -21,6 +21,19 @@ client = OpenAI(api_key=os.environ['OPEN_AI_API_KEY'])
 async def process_text(request: Request):
     data = await request.json()
     message = data.get("message")
+
+    if not message:
+        return {"error": "Empty input."}
+    
+    if len(message) < 10:
+        return {"error": "Message too short."}
+
+    if len(message.split()) < 3:
+        return {"error": "Please enter a complete sentence."}
+
+    if not any(char.isalpha() for char in message):
+        return {"error": "Input must contain letters."}
+
     tones = ["professional", "casual", "polite", "social media"]
 
     def generate():

@@ -53,8 +53,30 @@ function App() {
         signal: controller.signal
       });
 
-      if (!response.ok || !response.body) {
+      const contentType = response.headers.get('Content-Type') || '';
+
+      if (!response.ok) {
         throw new Error('Error en la petición');
+      }
+
+      // Si es JSON, probablemente contiene un error como { error: "Message too short." }
+      if (contentType.includes('application/json')) {
+        const data = await response.json();
+        if (data.error) {
+          alert(`Error: ${data.error}`);
+          setIsLoading(false);
+          setIsTyping({
+            professional: false,
+            casual: false,
+            polite: false,
+            'social media': false
+          });
+          return;
+        }
+      }
+
+      if (!response.body) {
+        throw new Error('Respuesta vacía');
       }
 
       const reader = response.body.getReader();
